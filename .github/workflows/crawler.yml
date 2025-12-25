@@ -132,10 +132,13 @@ jobs:
             exit 1
           fi
 
-      - name: Run crawler
+     - name: Run crawler
         if: success()
         env:
-          API_URL: ${{ secrets.API_URL }}
+          # 1. 关键修改：直接在这里硬编码新的 API 地址
+          API_URL: "https://hotapi.itp.ink/api/s"
+          
+          # 2. 其他变量保持不变
           FEISHU_WEBHOOK_URL: ${{ secrets.FEISHU_WEBHOOK_URL }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
@@ -161,4 +164,5 @@ jobs:
           S3_ENDPOINT_URL: ${{ secrets.S3_ENDPOINT_URL }}
           S3_REGION: ${{ secrets.S3_REGION }}
           GITHUB_ACTIONS: true
+        # 3. 运行命令必须单独写在 run 下面
         run: python -m trendradar
